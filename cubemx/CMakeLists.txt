@@ -34,15 +34,15 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    #micro_ros_stm32cubemx_utils/extra_sources/custom_memory_manager.c
-    #micro_ros_stm32cubemx_utils/extra_sources/microros_allocators.c
-    #micro_ros_stm32cubemx_utils/extra_sources/microros_time.c
+    libmicroros/extra_sources/custom_memory_manager.c
+    libmicroros/extra_sources/microros_allocators.c
+    libmicroros/extra_sources/microros_time.c
 
-    #micro_ros_stm32cubemx_utils/extra_sources/microros_transports/cdc_transport.c
+    libmicroros/extra_sources/microros_transports/usb_cdc_transport.c
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    #micro_ros_stm32cubemx_utils/microros_static_library/libmicroros/microros_include
+    libmicroros/microros_include
 )
 
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
@@ -52,5 +52,5 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
-    #micro_ros_stm32cubemx_utils/microros_static_library/libmicroros/libmicroros.a
+    #libmicroros/libmicroros.a
 )
