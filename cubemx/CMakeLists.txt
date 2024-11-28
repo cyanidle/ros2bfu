@@ -9,48 +9,53 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-set(CMAKE_PROJECT_NAME cubemx)
+set(CMAKE_PROJECT_NAME ros2bfu)
 
 include("cmake/gcc-arm-none-eabi.cmake")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-enable_language(C ASM CXX)
-
 # Core project settings
-project(${CMAKE_PROJECT_NAME})
+project(ros2bfu LANGUAGES C ASM CXX)
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
 # Create an executable object type
-add_executable(${CMAKE_PROJECT_NAME})
+add_executable(ros2bfu)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
 
 # Link directories setup
-target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
+target_link_directories(ros2bfu PRIVATE
     # Add user defined library search paths
 )
 
 # Add sources to executable
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+target_sources(ros2bfu PRIVATE
     libmicroros/extra_sources/custom_memory_manager.c
     libmicroros/extra_sources/microros_allocators.c
     libmicroros/extra_sources/microros_time.c
 
     libmicroros/extra_sources/microros_transports/usb_cdc_transport.c
+
+    bfu/bfumain.cpp
 )
 
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+target_include_directories(ros2bfu PRIVATE
     libmicroros/microros_include
 )
 
-target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+target_compile_definitions(ros2bfu PRIVATE
 
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME}
+target_link_libraries(ros2bfu
     stm32cubemx
 
-    #libmicroros/libmicroros.a
+    ${CMAKE_SOURCE_DIR}/libmicroros/libmicroros.a
+)
+
+add_custom_command(TARGET ros2bfu POST_BUILD
+    COMMENT "Generating ros2bfu.hex"
+    COMMAND ${CMAKE_OBJCOPY} ARGS -O ihex $<TARGET_FILE:ros2bfu> ros2bfu.hex
 )

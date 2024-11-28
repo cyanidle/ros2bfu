@@ -106,6 +106,7 @@ void MX_FREERTOS_Init(void) {
 }
 
 /* USER CODE BEGIN Header_StartDefaultTask */
+void bfuMain(void);
 /**
   * @brief  Function implementing the defaultTask thread.
   * @param  argument: Not used
@@ -117,9 +118,8 @@ void StartDefaultTask(void *argument)
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
-  for(;;)
-  {
+  bfuMain();
+  for(;;) {
     osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
