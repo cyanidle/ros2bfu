@@ -11,6 +11,11 @@
 #include <rmw_microros/rmw_microros.h>
 #include <std_msgs/msg/int32.h>
 
+extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    //todo: check which pin generated INT
+}
+
 extern "C" void bfuMain(void) {
     rcl_publisher_t publisher;
     std_msgs__msg__Int32 msg;

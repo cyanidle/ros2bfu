@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
-set(STM stmf103) #stmf411
+set(STM stmf103 CACHE STRING "Variant of stm to use")
+set_property(CACHE STM PROPERTY STRINGS "stmf103" "stmf411")
 
 message(STATUS "Using STM: ${STM}")
 
