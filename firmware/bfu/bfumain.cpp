@@ -11,9 +11,12 @@
 #include <rmw_microros/rmw_microros.h>
 #include <std_msgs/msg/int32.h>
 
+volatile int a;
+
 extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     //todo: check which pin generated INT
+    a = GPIO_Pin;
 }
 
 extern "C" void bfuMain(void) {
